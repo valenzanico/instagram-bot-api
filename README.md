@@ -8,5 +8,4 @@ pip install git+https://github.com/valenzanico/instagram-bot-api.git#egg=instagr
 
 
 #### Build
-- Add `"setuptools >= 43.0.0"` to `pyproject.toml` 
 - Run `python3 -m build`
