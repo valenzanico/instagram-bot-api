@@ -1,2 +1,7 @@
 dist
 *.egg-info
+.env
+geckodriver
+firefox
+geckodriver.log
+__pycache__

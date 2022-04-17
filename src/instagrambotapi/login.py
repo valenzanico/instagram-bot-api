@@ -284,7 +284,7 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     myoptions.add_argument("--width=375")
     myoptions.add_argument("--height=812")
     seleniumwireopt = {}
-    if proxy:
+    if proxy != None:
         seleniumwireopt["proxy"] = {}
         proxy_opt = seleniumwireopt["proxy"]
         proxy_ip = proxy["proxy"]
@@ -326,7 +326,7 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     random_sleep(1, 2)
     driver.execute_script('''
 
-    document.querySelector("body > div.RnEpo.Yx5HN._4Yzd2 > div > div > button.aOOlW.bIiDR").click()
+    document.querySelector("body > div.RnEpo.Yx5HN._4Yzd2 > div > div > div.qF0y9.Igw0E.IwRSH.eGOV_._4EzTm.MGdpg.aGBdT > div.qF0y9.Igw0E.IwRSH.eGOV_._4EzTm.bkEs3 > div > button").click()
     ''')# accept cookies  
     random_sleep(1, 4)
     driver.execute_script('''
@@ -363,7 +363,7 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     random_sleep(10, 15)
     try:#se trova il rpompt che chiede di salvare le credenziali lo accetta
         driver.execute_script(
-'''document.querySelector("#react-root > section > main > div > div > section > div > button").click()''')#save credentials
+'''document.querySelector("body > div.RnEpo.Yx5HN._4Yzd2 > div > div > div.qF0y9.Igw0E.IwRSH.eGOV_._4EzTm.MGdpg.aGBdT > div.qF0y9.Igw0E.IwRSH.eGOV_._4EzTm._5VUwz.y2rAt > button").click()''')#save credentials
     except Exception as error:
         print("message not found")
     random_sleep(1, 3)

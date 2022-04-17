@@ -1,8 +1,10 @@
+from http import cookies
 import subprocess
 import json
 import time
 import random
 import os
+import requests
 from datetime import datetime
 
 def random_sleep(min: float, max: float):
@@ -10,13 +12,64 @@ def random_sleep(min: float, max: float):
         time.sleep(wait_time)
         print("wait " + str(wait_time))
 
-def get_users_from_like( post, sessionid, count, start_from):
+def get_users_from_likev1( post, sessionid, count, start_from):
     #questa funzione esegue lo script javascript e raccoglie l'output json
     #output : persone che hanno messo like alla page indicata
     command = f'''/usr/bin/node "/home/eagle/d/myapp/cassinelli/dir-spam-bot/spambot/scrape_post.js" "{post}" "{sessionid}" {count} {start_from}'''
     output = str(subprocess.check_output(command, shell=True)).replace("b'", "").replace("'", "")
     users_dict = json.loads(output)
     return users_dict
+
+
+def get_users_from_like(post: str, sessionid):
+    users = []
+    cookies = {
+        "sessionid": sessionid
+    }
+    if post.startswith("https://www.instagram.com/p/"):
+        post = post.replace("https://www.instagram.com/p/" , "")
+        post = post.replace("/", "")
+    else:
+        return "error-badurl"
+    next_id = None
+
+    url = '''https://www.instagram.com/graphql/query/?query_hash=d5d763b1e2acf209d62d22d184488e57&variables={"shortcode":"''' +post+ '''","include_reel":false,"first":''' +str(50)+ '''}'''
+    req = requests.get(
+        url,
+        cookies=cookies
+    )
+    if req.status_code == 200:
+        data = req.json()
+        if data["status"] == "ok":
+            for user in data["data"]["shortcode_media"]["edge_liked_by"]["edges"]:
+                users.append(user["node"]["username"])
+
+            if data["data"]["shortcode_media"]["edge_liked_by"]["page_info"]["has_next_page"]:
+                next_id = data["data"]["shortcode_media"]["edge_liked_by"]["page_info"]["end_cursor"]
+        else:
+            return "error-badurl"
+
+    while next_id != None:
+        url = '''https://www.instagram.com/graphql/query/?query_hash=d5d763b1e2acf209d62d22d184488e57&variables={"shortcode":"''' +post+ '''","include_reel":false,"first":''' +str(50)+ ''',"after":"''' +next_id+ '''"}'''
+        req = requests.get(
+            url,
+            cookies=cookies
+        )
+        if req.status_code == 200:
+            data = req.json()
+            if data["status"] == "ok":
+                for user in data["data"]["shortcode_media"]["edge_liked_by"]["edges"]:
+                    users.append(user["node"]["username"])
+                if data["data"]["shortcode_media"]["edge_liked_by"]["page_info"]["has_next_page"]:
+                    next_id = data["data"]["shortcode_media"]["edge_liked_by"]["page_info"]["end_cursor"]
+                else:
+                    next_id = None
+            else:
+                return "error-badurl"
+        else:
+            return "error-badurl"
+    return users
+         
 
 
 def old_pages_scraper(driver, page, req_number=50, start_from=1, export=False):
