@@ -3,7 +3,7 @@ Apis for instagram based on Selenium
 
 #### Install
 ```
-pip install git+https://github.com/valenzanico/instagram-bot-apis.git#egg=instagrambotapi
+pip install "git+https://github.com/valenzanico/instagram-bot-apis.git#egg=instagrambotapi"
 ```
 
 
