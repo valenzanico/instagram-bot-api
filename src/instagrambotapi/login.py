@@ -3,6 +3,7 @@ import keyboard
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.by import By
 from numpy.random import default_rng
 from .time_util import sleep as r_sleep
 random = default_rng()
@@ -283,8 +284,9 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     myoptions.headless = headless  # activate headless mode
     myoptions.add_argument("--width=390")
     myoptions.add_argument("--height=844")
-    seleniumwireopt = {}
+    seleniumwireopt = None
     if proxy != None:
+        seleniumwireopt = {}
         seleniumwireopt["proxy"] = {}
         proxy_opt = seleniumwireopt["proxy"]
         proxy_ip = proxy["proxy"]
@@ -329,9 +331,7 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     document.querySelector("body > div:nth-child(2) > div > div > div > div:nth-child(4) > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div.x1uvtmcs.x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div > div > div > div.x7r02ix.xf1ldfh.x131esax.xdajt7p.xxfnqb6.xb88tzc.xw2csxc.x1odjw0f.x5fp0pe.x5yr21d.x19onx9a > div > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abam._abc0._abcm > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abb2._abbk._abcm > button").click()
     ''')# accept cookies  
     random_sleep(1, 4)
-    driver.execute_script('''
-    document.querySelector("#react-root > section > main > article > div > div > div > div.AC7dP.Igw0E.IwRSH.pmxbr.eGOV_._4EzTm.gKUEf > button:nth-child(1)").click()
-    ''')
+    driver.find_element(By.XPATH,"/html/body/div[2]/div/div/div/div[1]/div/div/div/div[1]/section/main/article/div/div/div[2]/div[3]/button[1]" )
     random_sleep(1, 4)
     try:
         username_inp = driver.find_element_by_xpath(
