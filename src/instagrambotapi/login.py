@@ -151,12 +151,12 @@ def loginv2(username, password, headless=True, path={"browser": None, "driver": 
     print("start login")
     profile = webdriver.FirefoxProfile()
     # authorize notificatrion
-    profile.set_preference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/93.0.4577.82")
+    profile.set_preference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1")
     profile.set_preference('permissions.default.desktop-notification', 1)
     myoptions = Options()
     myoptions.headless = headless  # activate headless mode
-    myoptions.add_argument("--width=375")
-    myoptions.add_argument("--height=812")
+    myoptions.add_argument("--width=390")
+    myoptions.add_argument("--height=844")
     if proxy:
         myproxy_http = proxy["proxy"] + ":" + str(proxy["port_http"])
         myproxy_socks = proxy["proxy"] + ":" + str(proxy["port_socks"])
@@ -277,12 +277,12 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     print("start login")
     profile = webdriver.FirefoxProfile()
     # authorize notificatrion
-    profile.set_preference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/93.0.4577.82")
+    profile.set_preference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1")
     profile.set_preference('permissions.default.desktop-notification', 1)
     myoptions = Options()
     myoptions.headless = headless  # activate headless mode
-    myoptions.add_argument("--width=375")
-    myoptions.add_argument("--height=812")
+    myoptions.add_argument("--width=390")
+    myoptions.add_argument("--height=844")
     seleniumwireopt = {}
     if proxy != None:
         seleniumwireopt["proxy"] = {}
@@ -326,7 +326,7 @@ def login(username, password, headless=True, path={"browser": None, "driver": No
     random_sleep(1, 2)
     driver.execute_script('''
 
-    document.querySelector("body > div.RnEpo.Yx5HN._4Yzd2 > div > div > div.qF0y9.Igw0E.IwRSH.eGOV_._4EzTm.MGdpg.aGBdT > div.qF0y9.Igw0E.IwRSH.eGOV_._4EzTm.bkEs3 > div > button").click()
+    document.querySelector("body > div:nth-child(2) > div > div > div > div:nth-child(4) > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div.x1uvtmcs.x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div > div > div > div.x7r02ix.xf1ldfh.x131esax.xdajt7p.xxfnqb6.xb88tzc.xw2csxc.x1odjw0f.x5fp0pe.x5yr21d.x19onx9a > div > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abam._abc0._abcm > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abb2._abbk._abcm > button").click()
     ''')# accept cookies  
     random_sleep(1, 4)
     driver.execute_script('''
