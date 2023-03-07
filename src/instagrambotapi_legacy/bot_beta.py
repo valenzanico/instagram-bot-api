@@ -3,6 +3,10 @@ from selenium.common.exceptions import ElementClickInterceptedException
 
 
 
+'''
+bot con codice legacy che attualmente non funziona
+da rivedere
+'''
 class Bot:
     def __init__(self, message, driver, check=None):
         self.message = message
