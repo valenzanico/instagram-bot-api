@@ -70,9 +70,14 @@ class Scraper:
                     raise error
                 else:
                     break
-        if len(scraped_followers) > min_f:
+        scraped_followers_number = len(scraped_followers)
+        if scraped_followers_number > min_f:
             #elliminazione dei followers gia letti in precedenza
             scraped_followers = scraped_followers[min_f:]
+        if scraped_followers_number > max_f:
+            #elliminazione dei followers in eccesso
+            scraped_followers = scraped_followers[:max_f]
+        
         self.scraped_followers = scraped_followers#salvataggio dei followers nello stato della classe
         print("scraping followers completed")
         return True
