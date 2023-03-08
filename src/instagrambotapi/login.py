@@ -44,6 +44,13 @@ class Login():
                 "wait": (1, 3)
             },
             {
+                "description": "click save information checkbox",
+                "command": "click",
+                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/section/main/div[1]/div/div/div[2]/form/div[1]/div[5]/div/label/div[1]"),
+                "wait": (1, 3),
+                "required": False
+            },
+            {
                 # invio delle credenziali cliccando sul bottone di login
                 "description": "click login button",
                 "command": "script",
@@ -55,10 +62,8 @@ class Login():
             {
                 # accetta la notifica di salvataggio dei dati di accesso quando la trova
                 "description": "accept save login data",
-                "command": "script",
-                "script": '''
-                document.querySelector("body > div:nth-child(2) > div > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div > div > div.x78zum5.xdt5ytf.x10cihs4.x1t2pt76.x1n2onr6.x1ja2u2z > section > main > div > div > section > div > button").click()
-                ''',
+                "command": "click",
+                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div/div[2]/section/main/div/div/section/div/button"),
                 "wait": (5, 7),
                 "required": False
             }
@@ -77,7 +82,7 @@ class Login():
             "description": "open instagram site",
             "command": "get",
             "url": "https://www.instagram.com/",
-            "wait": (10,15)
+            "wait": (20,23)
         },
         {
             "description": "delete cookies",
@@ -89,7 +94,7 @@ class Login():
             "description": "open instagram site",
             "command": "get",
             "url": "https://www.instagram.com/",
-            "wait": (10,15)
+            "wait": (15,20)
         },]
         for action in logout_commands:
             self.execute_action(action)

@@ -18,7 +18,9 @@ class Bot(Driver, Login, Scraper, Senddm):
         self.scraped_followers = []
 
         super().__init__(headless, proxy, path)
-        self.driver = self.init_driver()
+        if self.init_driver():
+            print("Driver initialized")
+
 
     def insert_text_action(self, text, text_entry):
 

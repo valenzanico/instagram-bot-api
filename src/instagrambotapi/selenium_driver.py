@@ -19,7 +19,7 @@ class Driver:
         path = self.path
 
         if self.driver:
-            return self.driver
+            return True
         profile = webdriver.FirefoxProfile()
     # authorize notificatrion
         profile.set_preference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1")
@@ -63,11 +63,24 @@ class Driver:
     
         if proxy:
             driver.set_page_load_timeout(20)
-            driver.get("https://tools.keycdn.com/geo")
+            self.execute_action({
+                "descrition": "open url ip",
+                "command": "get",
+                "url":"https://tools.keycdn.com/geo",
+                "wait": (2,3),
+                "required": False,
+            })
             print("sto controllando se il proxy funziona...")
             time.sleep(2)
 
-
-        return driver
+        self.driver = driver
+        return True
+    
+    def close(self):
+        self.driver.quit()
+        self.logged = False
+        self.scraped_followers = None
+        self.driver = None
+        return True
 
 
