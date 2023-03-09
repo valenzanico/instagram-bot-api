@@ -1,4 +1,4 @@
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains, Keys
 from selenium.webdriver.common.by import By
 
 #questa classe contiene le funzioni che si occupano si eseguire il login sul sito di instagram
@@ -51,10 +51,10 @@ class Login():
                 "required": False
             },
             {
-                # invio delle credenziali cliccando sul bottone di login
-                "description": "click login button",
-                "command": "click",
-                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/section/main/div[1]/div/div/div[2]/form/div[1]/div[7]/button"),
+                # invio delle credenziali con il pulsante invio
+                "description": "ENTER to login",
+                "command": "driver_function",
+                "function": lambda driver: driver.send_keys(Keys.ENTER),
                 "wait": (30, 40)
             },
             {
