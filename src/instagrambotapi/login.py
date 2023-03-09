@@ -53,10 +53,8 @@ class Login():
             {
                 # invio delle credenziali cliccando sul bottone di login
                 "description": "click login button",
-                "command": "script",
-                "script": '''
-            document.querySelector("#loginForm > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abc2._abcm > div:nth-child(6) > button").click()
-            ''',
+                "command": "click",
+                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/section/main/div[1]/div/div/div[2]/form/div[1]/div[7]/button"),
                 "wait": (30, 40)
             },
             {
