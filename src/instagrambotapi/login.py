@@ -54,7 +54,7 @@ class Login():
                 # invio delle credenziali con il pulsante invio
                 "description": "ENTER to login",
                 "command": "driver_function",
-                "function": lambda driver: driver.send_keys(Keys.ENTER),
+                "function": lambda driver: ActionChains(driver).send_keys(Keys.ENTER).perform(),
                 "wait": (30, 40)
             },
             {
