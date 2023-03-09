@@ -1,4 +1,4 @@
-from selenium.webdriver.common.action_chains import ActionChains, Keys
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
 
 #questa classe contiene le funzioni che si occupano si eseguire il login sul sito di instagram
