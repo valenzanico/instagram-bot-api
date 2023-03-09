@@ -19,7 +19,7 @@ class Senddm:
             #1-Clicca sul pulsante per seguire il ricevente
             "description": "start follow user",
          "command": "click",
-            "script": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button/div"),
+            "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button/div"),
             "wait": (5,7),
             "required": False
          }, 
