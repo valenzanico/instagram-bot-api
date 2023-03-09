@@ -55,21 +55,24 @@ class Bot(Driver, Login, Scraper, Senddm):
         action_function = None
         command_type = action.get("command")
         print(action.get("description"))
-        if command_type == "get":
-            action_function = lambda: driver.get(action.get("url"))
-        elif command_type == "script":
-            action_function = lambda: driver.execute_script(action.get("script"))
-        elif command_type == "write_text":
-            def action_function():
-                text_entry = driver.find_element(*action.get("target"))
-                text = action.get("text")
-                self.insert_text_action(text, text_entry)
-        elif command_type == "driver_function":#questo tipo di azione è usato per eseguire una funzione del driver
-            action_function = lambda: action.get("function")(driver)
-        elif command_type == "click":
-            def action_function():
-                target = driver.find_element(*action.get("target"))
-                target.click()
+        match command_type:
+            case "get":
+                action_function = lambda: driver.get(action.get("url"))
+            case "script":
+                action_function = lambda: driver.execute_script(action.get("script"))
+            case "write_text":
+                def action_function():
+                    text_entry = driver.find_element(*action.get("target"))
+                    text = action.get("text")
+                    self.insert_text_action(text, text_entry)
+            case "driver_function":#questo tipo di azione è usato per eseguire una funzione del driver
+                action_function = lambda: action.get("function")(driver)
+            case "click":
+                action_function = lambda: driver.find_element(*action.get("target")).click()
+            case _:
+                def action_function(): 
+                    raise Exception("Command not found")
+
         try:
             action_function()
             if action.get("wait"):
