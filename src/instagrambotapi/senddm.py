@@ -78,7 +78,7 @@ class Senddm:
 
         ]
 
-        for action in send_direct_action[:2]:
+        for action in send_direct_action[:3]:
             self.execute_action(action)
         
         if check_message:#controlla se il messaggio è gia stato mandato nella chat 
@@ -90,7 +90,7 @@ class Senddm:
             if check_message in html_chat:
                 return False
 
-        for action in send_direct_action[2:]:
+        for action in send_direct_action[3:]:
             self.execute_action(action)
 
         return True
