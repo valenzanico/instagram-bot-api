@@ -28,9 +28,10 @@ class Bot(Driver, Login, Scraper, Senddm):
         (ActionChains(self.driver)
             .move_to_element(text_entry)
             .click(text_entry)
-            .send_keys(text)
-            .perform()
-            )
+        .perform())
+        for letter in text:
+            ActionChains(self.driver).send_keys(letter).perform()
+            self.random_sleep(0.1, 0.2)
         
     
     def random_sleep(self, min: float, max: float):#genera un numero random float tra min e max
