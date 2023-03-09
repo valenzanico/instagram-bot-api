@@ -81,7 +81,11 @@ class Senddm:
             self.execute_action(action)
         
         if check_message:#controlla se il messaggio è gia stato mandato nella chat 
-            html_chat = driver.execute_script('''return document.querySelector("#react-root > section > div.IEL5I > div > div > div.Igw0E.IwRSH.hLiUi.vwCYk").innerHTML''')
+            try:
+                html_chat = driver.execute_script('''return document.querySelector("#react-root > section > div.IEL5I > div > div > div.Igw0E.IwRSH.hLiUi.vwCYk").innerHTML''')
+            except Exception as error:
+                print(error)
+                html_chat = ""
             if check_message in html_chat:
                 return False
 
