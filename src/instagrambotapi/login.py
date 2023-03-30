@@ -20,11 +20,9 @@ class Login():
             {
                 # Accept instagram login cookies
                 "description": "accept cookies",
-                "command": "script",
-                "script":
-                '''
-            document.querySelector("body > div:nth-child(2) >  div > div > div:nth-child(4) > div > div > div.x9f619.x1n2onr6.x1ja2u2z > div > div.x1uvtmcs.x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div > div > div > div.x7r02ix.xf1ldfh.x131esax.xdajt7p.xxfnqb6.xb88tzc.xw2csxc.x1odjw0f.x5fp0pe.x5yr21d.x19onx9a > div > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abam._abc0._abcm > div._ab8w._ab94._ab99._ab9f._ab9m._ab9p._abb2._abbk._abcm > button").click()
-            ''',
+                "command": "click",
+                "target":
+                (By.XPATH, '''//button[contains(text(), "Consenti solo i cookie essenziali")]'''),
                 "wait": (15, 20)
             },
             {
@@ -61,7 +59,7 @@ class Login():
                 # accetta la notifica di salvataggio dei dati di accesso quando la trova
                 "description": "accept save login data",
                 "command": "click",
-                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div/div[2]/section/main/div/div/section/div/button"),
+                "target": (By.XPATH, '''//button[contains(text(), "Salva le informazioni")]'''),
                 "wait": (5, 7),
                 "required": False
             }

@@ -19,7 +19,7 @@ class Senddm:
             #1-Clicca sul pulsante per seguire il ricevente
             "description": "start follow user",
          "command": "click",
-            "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button/div"),
+            "target": (By.XPATH, '''//div[contains(text(), "Segui")]'''),
             "wait": (5,7),
             "required": False
          }, 
@@ -33,7 +33,7 @@ class Senddm:
         {   #2-Apre la chat dei Direct message con il ricevente
             "description": "Open DM chat",
             "command": "click",
-            "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/header/section/div[3]/div/div[2]/div"),
+            "target": (By.XPATH, '''//div[contains(text(), "Messaggio")]'''),
             "wait": (10,15)
         },
         {
@@ -48,7 +48,7 @@ class Senddm:
             #4-clicca sul pulsante di invio e manda il messaggio
             "description": "click on button that dm message",
             "command": "click",
-            "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/section/div[2]/div/div/div[2]/div/div/div[2]/button"),
+            "target": (By.XPATH, '''//div[contains(text(), "Invia")]'''),
             "wait": (4,9)   
         },
          {
@@ -59,25 +59,25 @@ class Senddm:
              "wait": (5,6),
              "required":False
          },
-        {
-            #6-clicca sul pulsante di unfollow del ricevente
-            "description": "click on unfollow button",
-            "command": "click",
-         "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/div[1]/div[2]/section/main/div/header/section/div[3]/div/div[1]/button"),
-             "wait": (4,7),
-            "required": False
-         },
-         {
-             #7-conferma di voler smettere di seguire il ricevente
-             "description": "click on confirm unfollow button",
-             "command": "click",
-             "target": (By.XPATH, "/html/body/div[6]/div/div/div[2]/div/div[6]/div/div/div/div/div"),
-             "wait": (4,7),
-             "required": False
-        }
+        # {
+        #     #6-clicca sul pulsante di unfollow del ricevente
+        #     "description": "click on unfollow button",
+        #     "command": "click",
+        #  "target": (By.XPATH, '''//div[contains(text(), "Segui già")]'''),
+        #      "wait": (4,7),
+        #     "required": False
+        #  },
+        #  {
+        #      #7-conferma di voler smettere di seguire il ricevente
+        #      "description": "click on confirm unfollow button",
+        #      "command": "click",
+        #      "target": (By.XPATH, '''//span[contains(text(), "Non seguire più")]'''),
+        #      "wait": (4,7),
+        #      "required": False
+        # }
 
         ]
-
+        #azione per aprire la chat dei DM
         for action in send_direct_action[:3]:
             self.execute_action(action)
         
@@ -89,7 +89,7 @@ class Senddm:
                 html_chat = ""
             if check_message in html_chat:
                 return False
-
+        #azione per mandare il messaggio e tornare alla pagina del ricevente
         for action in send_direct_action[3:]:
             self.execute_action(action)
 
