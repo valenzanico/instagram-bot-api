@@ -53,7 +53,7 @@ class Login():
                 "description": "ENTER to login",
                 "command": "driver_function",
                 "function": lambda driver: ActionChains(driver).send_keys(Keys.ENTER).perform(),
-                "wait": (30, 40)
+                "wait": (20, 30)
             },
             {
                 # accetta la notifica di salvataggio dei dati di accesso quando la trova
@@ -62,6 +62,13 @@ class Login():
                 "target": (By.XPATH, '''//button[contains(text(), "Salva le informazioni")]'''),
                 "wait": (5, 7),
                 "required": False
+            },
+            {
+                #controlla il login
+                "description": "check login",
+                "command": "driver_function",
+                "function": lambda driver: driver.get_cookie("sessionid"),
+                "wait": (3, 4),
             }
         ]
 
