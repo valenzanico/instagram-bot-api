@@ -18,7 +18,7 @@ class Scraper:
             "description": "open instagram user JSON api",
             "command": "get",
             "url": instagram_api_userinfo.substitute(username=username),
-            "wait": (3, 5),
+            "wait": (2, 3),
         })
         try:#prova a leggere il JSON
             print("loading user id from JSON...")

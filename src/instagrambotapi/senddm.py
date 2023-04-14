@@ -34,7 +34,7 @@ class Senddm:
             "description": "Open DM chat",
             "command": "click",
             "target": (By.XPATH, '''//div[contains(text(), "Messaggio")]'''),
-            "wait": (10,15)
+            "wait": (8,11)
         },
         {
             #3-Scrive il Messaggio nel input dei DM
@@ -42,14 +42,14 @@ class Senddm:
             "command": "write_text",
             "target": (By.XPATH, "//textarea[@placeholder='Scrivi un messaggio...']"),
             "text": message,
-            "wait": (5,8)
+            "wait": (1,4)
         },
         {
             #4-clicca sul pulsante di invio e manda il messaggio
             "description": "click on button that dm message",
             "command": "click",
             "target": (By.XPATH, '''//div[contains(text(), "Invia")]'''),
-            "wait": (4,9)   
+            "wait": (2,6)   
         },
          {
              #5-ritorna alla pagina utente del ricevente per smettere di seguirlo

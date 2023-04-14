@@ -15,7 +15,7 @@ class Login():
                 "description": "open login page",
                 "command": "get",
                 "url": "https://www.instagram.com/accounts/login/",
-                "wait": (10,15)
+                "wait": (8,13)
             },
             {
                 # Accept instagram login cookies
@@ -23,7 +23,7 @@ class Login():
                 "command": "click",
                 "target":
                 (By.XPATH, '''//button[contains(text(), "Consenti solo i cookie essenziali")]'''),
-                "wait": (15, 20)
+                "wait": (8, 11)
             },
             {
                 # inserimento username nel input di testo
@@ -53,7 +53,7 @@ class Login():
                 "description": "ENTER to login",
                 "command": "driver_function",
                 "function": lambda driver: ActionChains(driver).send_keys(Keys.ENTER).perform(),
-                "wait": (20, 30)
+                "wait": (20, 25)
             },
             {
                 # accetta la notifica di salvataggio dei dati di accesso quando la trova
