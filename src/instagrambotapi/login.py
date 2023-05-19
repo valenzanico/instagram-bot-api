@@ -22,7 +22,7 @@ class Login():
                 "description": "accept cookies",
                 "command": "click",
                 "target":
-                (By.XPATH, '''//button[contains(text(), "Consenti solo i cookie essenziali")]'''),
+                (By.XPATH, '''//button[contains(text(), "Rifiuta cookie facoltativi")]'''),
                 "wait": (8, 11)
             },
             {
