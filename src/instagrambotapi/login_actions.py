@@ -17,7 +17,7 @@ LOGIN_ACTIONS = lambda username, password: [
         "command": "click",
         "target": (
             By.XPATH,
-            """//button[contains(text(), "Consenti solo i cookie essenziali")]""",
+            """//button[contains(text(), "Rifiuta cookie facoltativi")]""",
         ),
         "wait": (15, 20),
     },
