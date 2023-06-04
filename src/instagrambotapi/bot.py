@@ -30,7 +30,7 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
         self.create_cache_dir()
 
 
-    def insert_text_action(self, text, text_entry):
+    def insert_text_action(self, text, text_entry, time_min=0.1, time_max=0.2):
 
         #questa sequenza di azioni selenium inserisce un dato testo in un dato target(text_entry)
         (ActionChains(self.driver)
@@ -39,7 +39,7 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
         .perform())
         for letter in text:
             ActionChains(self.driver).send_keys(letter).perform()
-            self.random_sleep(0.1, 0.2)
+            self.random_sleep(time_min, time_max)
         
     
     def random_sleep(self, min: float, max: float):#genera un numero random float tra min e max
@@ -72,7 +72,10 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
                 def action_function():
                     text_entry = driver.find_element(*action.get("target"))
                     text = action.get("text")
-                    self.insert_text_action(text, text_entry)
+                    if action.get("write_speed"):
+                        self.insert_text_action(text, text_entry, *action.get("write_speed"))
+                    else:
+                        self.insert_text_action(text, text_entry)
             case "driver_function":#questo tipo di azione è usato per eseguire una funzione del driver
                 action_function = lambda: action.get("function")(driver)
             case "click":

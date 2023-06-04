@@ -42,6 +42,7 @@ class Senddm:
             "command": "write_text",
             "target": (By.XPATH, "//textarea[@placeholder='Scrivi un messaggio...']"),
             "text": message,
+            "write_speed": (0.03,0.06),#velocità di scrittura del messaggio
             "wait": (1,4)
         },
         {
