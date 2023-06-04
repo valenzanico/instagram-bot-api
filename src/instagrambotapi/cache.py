@@ -120,6 +120,10 @@ class Cache:
         #se il file non è scaduto
         if (int(time.time()) - self.read_cache_timestamp) > time_slice:   
             #se è scaduto ne crea uno nuovo
+            if self.cache_items:
+                self.cache_items = None
+            if self.cache_file:
+                self.cache_file.close()
             self.check_cache_file(prefix, time_slice)
         
         #aggiunge l'item al set
