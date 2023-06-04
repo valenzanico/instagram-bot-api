@@ -99,20 +99,27 @@ class Cache:
         #salva la timestamp del file
         self.read_cache_timestamp = int(newest_file.removeprefix(f"{prefix}_").removesuffix(".json"))
         #apre il file
-        self.cache_file = open((os.path.join(self.cache_dir, newest_file)), "r+", encoding='utf-8')
-        print(self.cache_file.read())
+        read_cache_file = open((os.path.join(self.cache_dir, newest_file)), "r", encoding='utf-8')
+        read_cache_file_text = read_cache_file.read()
+        print(read_cache_file_text)
 
         #la libreria json ritorna un errore se il file è vuoto
 
         #se non è vuoto carica gli item
         #e li salva in un set
-        if len(self.cache_file.read()) > 0:
-            print(self.cache_file.read())
-            self.cache_items = json.loads(self.cache_file.read())
+        if len(read_cache_file_text) > 0:
+            print(read_cache_file_text)
+            self.cache_items = json.loads(read_cache_file_text)
             self.cache_items = set(self.cache_items)
+            print("carico dal vecchio file")
+
         else:
         #se è vutoto crea un set vuoto
+            print("nuovo file")
             self.cache_items = set()
+
+        read_cache_file.close()
+        self.cache_file = open((os.path.join(self.cache_dir, newest_file)), "w", encoding='utf-8')
 
     def append_item(self, prefix, time_slice, item):
         
@@ -131,7 +138,7 @@ class Cache:
         print(list(self.cache_items))
         
         #riscrive il file con il set aggiornato
-        self.cache_file.seek(0)
+
         json.dump(list(self.cache_items), self.cache_file)
         
 
