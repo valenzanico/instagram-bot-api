@@ -138,7 +138,7 @@ class Cache:
         print(list(self.cache_items))
         
         #riscrive il file con il set aggiornato
-
+        self.cache_file.seek(0)
         json.dump(list(self.cache_items), self.cache_file)
         
 
