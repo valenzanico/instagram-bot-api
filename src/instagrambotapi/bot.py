@@ -2,24 +2,32 @@ from .selenium_driver import Driver
 from .login import Login
 from .scraper import Scraper
 from .senddm import Senddm
+from .cache import Cache
 from selenium.webdriver.common.action_chains import ActionChains
 from numpy.random import default_rng
 from .time_util import sleep as r_sleep
 
 
-class Bot(Driver, Login, Scraper, Senddm):
+
+class Bot(Driver, Login, Scraper, Senddm, Cache):
     def __init__(self,
                 headless=True,
                 proxy=None,
                 path={"browser": None, "driver": None},
+                cache_dir="cache",
                 ):
         self.driver = None
         self.logged = False 
         self.scraped_followers = []
+        self.cache_dir = cache_dir
+        
+
 
         super().__init__(headless, proxy, path)
         if self.init_driver():
             print("Driver initialized")
+        
+        self.create_cache_dir()
 
 
     def insert_text_action(self, text, text_entry):
