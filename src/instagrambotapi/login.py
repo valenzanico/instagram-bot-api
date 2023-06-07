@@ -94,10 +94,10 @@ class Login():
             "wait": (1,3)
         },
         {
-            "description": "open instagram site",
+            "description": "open Algorithm-net site",
             "command": "get",
-            "url": "https://www.instagram.com/",
-            "wait": (15,20)
+            "url": "https://algorithm-net.com",
+            "wait": (5,7)
         },]
         for action in logout_commands:
             self.execute_action(action)
