@@ -22,12 +22,12 @@ class Driver:
             return True
         profile = webdriver.FirefoxProfile()
     # authorize notificatrion
-        profile.set_preference("general.useragent.override", "Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Mobile/15E148 Safari/604.1")
+        profile.set_preference("Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1")
         profile.set_preference('permissions.default.desktop-notification', 1)
         myoptions = Options()
         myoptions.headless = headless  # activate headless mode
-        myoptions.add_argument("--width=390")
-        myoptions.add_argument("--height=844")
+        myoptions.add_argument("--width=414")
+        myoptions.add_argument("--height=896")
         seleniumwireopt = None
         if proxy != None:
             seleniumwireopt = {}
