@@ -30,7 +30,7 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
         self.create_cache_dir()
 
 
-    def insert_text_action(self, text, text_entry, time_min=0.1, time_max=0.2):
+    def insert_text_action(self, text, text_entry, time_min=0.2, time_max=0.4):
 
         #questa sequenza di azioni selenium inserisce un dato testo in un dato target(text_entry)
         (ActionChains(self.driver)
