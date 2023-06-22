@@ -22,14 +22,14 @@ class Login():
                 "description": "accept cookies",
                 "command": "click",
                 "target":
-                (By.XPATH, '''//button[contains(text(), "Rifiuta cookie facoltativi")]'''),
+                (By.XPATH, '''//button[contains(text(), "Consenti tutti i cookie")]'''),
                 "wait": (8, 11)
             },
             {
                 # inserimento username nel input di testo
                 "description": "insert username",
                 "command": "write_text",
-                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/section/main/div[1]/div/div/div[2]/form/div[1]/div[3]/div/label/input"),
+                "target": (By.XPATH, '''//input[@aria-label = "Numero di telefono, nome utente o e-mail"]'''),
                 "text": username,
                 "wait": (1, 3),
             },
@@ -37,7 +37,7 @@ class Login():
                 # inserimento password nel input di testo
                 "description": "insert password",
                 "command": "write_text",
-                "target": (By.XPATH, "/html/body/div[2]/div/div/div[1]/div/div/div/div[1]/section/main/div[1]/div/div/div[2]/form/div[1]/div[4]/div/label/input"),
+                "target": (By.XPATH, '''//input[@aria-label = "Password"]'''),
                 "text": password,
                 "wait": (1, 3)
             },
