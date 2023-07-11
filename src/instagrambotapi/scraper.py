@@ -21,6 +21,7 @@ class Scraper:
 
         #caricamento follower gia salvati in precedenza
         #nel caso si scelga di usare la cache
+        print("loading cache...")
         cache_users = set()
 
         if self.cache_dir and cache_time_slice:

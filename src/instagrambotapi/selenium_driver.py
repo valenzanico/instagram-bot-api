@@ -1,5 +1,6 @@
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver import ActionChains
 import time
 
 #questa classe crea i driver selenium, apre il browser e setta le impostazioni
@@ -72,6 +73,11 @@ class Driver:
             })
             print("sto controllando se il proxy funziona...")
             time.sleep(2)
+
+        print("muovo il mouse")
+        ActionChains(driver)\
+        .move_by_offset( 13, 15)\
+        .perform()
 
         self.driver = driver
         return True

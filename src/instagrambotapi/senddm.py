@@ -1,6 +1,6 @@
 from string import Template
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver import ActionChains, Keys
 class Senddm:
     def __init__(self):
         super().__init__()
@@ -36,6 +36,45 @@ class Senddm:
             "target": (By.XPATH, '''//div[contains(text(), "Messaggio")]'''),
             "wait": (8,11)
         },
+        #apre la ricerca del utente a cui inviare i dm
+        {
+            "description": "open search user",
+            "command": "click",
+            "target": (By.XPATH, '''//div[contains(text(), "Invia messaggio")]'''),
+            "wait": (3,6)
+        },
+        #cerca l'utente a cui inviare i dm
+        {
+            "description": "search user",
+            "command": "write_text",
+            "target": (By.XPATH, '''//input[@placeholder="Cerca..."]'''),
+            "text": user,
+            "write_speed": (0.3,0.5),#velocità di scrittura del messaggio
+            "wait": (3,6)
+        },
+        {
+            #passa sul utente a cui inviare i dm
+            "description": "pass on user",
+            "command": "driver_function",
+            "function": lambda driver: ActionChains(driver).send_keys(Keys.TAB).perform(),
+            "wait": (1,3)
+
+        },
+        {
+            #conferma il utente a cui inviare i dm
+            "description": "confirm user",
+            "command": "driver_function",
+            "function": lambda driver: ActionChains(driver).send_keys(Keys.ENTER).perform(),
+            "wait": (1,3)
+        },
+        {
+            #clicca sul pulsante per aprire la chat dei DM
+            "description": "click on button that open chat",
+            "command": "click",
+            "target": (By.XPATH, '''//div[contains(text(), "Chat")]'''),
+            "wait": (1,4)
+        },
+        
         {
             #3-Scrive il Messaggio nel input dei DM
             "description": "write dm in the chat",
@@ -43,7 +82,7 @@ class Senddm:
             "target": (By.XPATH, "//textarea[@placeholder='Scrivi un messaggio...']"),
             "text": message,
             "write_speed": (0.1,0.2),#velocità di scrittura del messaggio
-            "wait": (1,4)
+            "wait": (2,4)
         },
         {
             #4-clicca sul pulsante di invio e manda il messaggio
