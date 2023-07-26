@@ -79,7 +79,7 @@ class Senddm:
             #3-Scrive il Messaggio nel input dei DM
             "description": "write dm in the chat",
             "command": "write_text",
-            "target": (By.XPATH, "//textarea[@placeholder='Scrivi un messaggio...']"),
+            "target": (By.XPATH, '''//div[contains(text(), "Scrivi un messaggio...")]'''),
             "text": message,
             "write_speed": (0.1,0.2),#velocità di scrittura del messaggio
             "wait": (2,4)
