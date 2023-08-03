@@ -51,7 +51,6 @@ class Driver:
      # open browser
         if path["browser"]!= None and path["driver"] !=None:
             driver = webdriver.Firefox(
-                executable_path=path["driver"],
                 options=myoptions,
                 firefox_profile=profile,
                 firefox_binary=path["browser"],
