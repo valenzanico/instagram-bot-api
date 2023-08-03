@@ -1,5 +1,6 @@
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver import ActionChains
 import time
@@ -22,6 +23,8 @@ class Driver:
 
         if self.driver:
             return True
+        
+        driver_service = Service(executable_path=path["driver"])
         profile = FirefoxProfile()
     # authorize notificatrion
         profile.set_preference("general.useragent.ovveride",self.user_agent)
@@ -31,6 +34,7 @@ class Driver:
         myoptions.add_argument("--width=414")
         myoptions.add_argument("--height=896")
         myoptions.profile = profile
+        myoptions.binary_location = path["browser"]
         seleniumwireopt = None
         if proxy != None:
             seleniumwireopt = {}
@@ -53,8 +57,10 @@ class Driver:
      # open browser
         if path["browser"]!= None and path["driver"] !=None:
             driver = webdriver.Firefox(
+                service=driver_service,
+                
                 options=myoptions,
-                firefox_binary=path["browser"],
+                
                 seleniumwire_options=seleniumwireopt) 
         else:
             driver = webdriver.Firefox(
