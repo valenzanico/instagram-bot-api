@@ -2,6 +2,7 @@ from string import Template
 import json
 from selenium.webdriver.common.by import By
 from numpy.random import default_rng
+import requests
 
 class Scraper:
     def __init__(self) -> None:
@@ -172,7 +173,79 @@ class Scraper:
             random = default_rng()
             random.shuffle(self.scraped_followers)
             return True
+        
 
+    def scrape_post_likes(self, post_url):
+        cookies = self.session_cookies
+        #se non è avvenuto il login ritorna falso
+        if not cookies["sessionid"]:
+
+            print("no cookies found")
+            return False
+        
+        #richiesta delle info del post
+        headers = {
+        'authority': 'www.instagram.com',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'accept-language': 'it,it-IT;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'cache-control': 'max-age=0',
+        # 'cookie': 'mid=YUdu1gALAAHNXnNE0h7F6pdDKYLo; ig_did=420D6E96-E926-41FA-B7BE-E007431604D1; datr=j0nLYQmmUG1BE9p3zrjavsHd; csrftoken=EhwjDqHVDJtpvez585YVGdkBamVH7u9B; ds_user_id=11534656352; fbm_124024574287414=base_domain=.instagram.com; shbid="8849\\05411534656352\\0541721922024:01f724f2e8244417045585608a38700f882460b447af4da2c531b697aa6a641b4225d419"; shbts="1690386024\\05411534656352\\0541721922024:01f7f875ebc159fa0c13b8c09fd03656f3a723c55b2989dc913e20f8be8c29737c5c2636"; sessionid=11534656352%3AfdtZIMinSQXbcA%3A17%3AAYeOri61WvZNgCKrgKrq6tSPEhVVvwiPeszqAkwPbE8; dpr=1.100000023841858; fbsr_124024574287414=INp0l4SO-bJiedlPr7N_dOdHndSAu2uxiCFU9yi9vAk.eyJ1c2VyX2lkIjoiMTAwMDUyMzAyMDIwNDEyIiwiY29kZSI6IkFRQnllLVF2Tm03TmdPN21mYUhEZHQ2R1NrSTFtcE5Gd1FsU3Q5Qks2VXZTX21EcjhDd19MQUtYY0lqZ2lNdFZEMzVCV19TSGZwdl9JSDJpOVJXeGFENTk4SUFMd2Fzc3A2RkRnOVJvX1NzZzd2T2diT3pvM0hOYWlLb1dEV3MzaFNnVEFaS2p3QzM4UTJvYjY1MmIzUHlEOUhQektDdElUMVFrQTlMRXR5UGZiT0dneGZPUDNMdWlYeDhPWElYeW9NYzh3TGhaWEs1NlpXY2V0dlJwREVmM3VuUmhNVVAwLVNnMElyOGdsMXM1dGlQbkxQcUdpd1I5SlBiLUQ1ekE1eWZ3ZVVUNjYtMjdrN09hcXNuN0RJRERJX2Q1T1ZVc1k0MlRMU0p5UFhMNm51dkJZQThTbzBRcGVXU1B3QVpJc2drdTlPLVczWHE2d3hmdjJVMkZxekljIiwib2F1dGhfdG9rZW4iOiJFQUFCd3pMaXhuallCTzB3TGxITm0zeTNYMXFGNzhocFpBdUxoSXZyRkpEc3ZpYnI0VDhCbWNXYm1DMXV0bHR5NDI4Q0FaQmxzdmlwSnRrdWNaQnp1dVZaQ2h0QlF5SFRLVEtsNFlET1ZUWkFsN2g4bDdMYVZWRFZ1emY3bWhjUXN1N2dQYmZlT2hmWkNkU1kzcXFSZUtUWkJKTG4xQm1KaWlXUkRKczBqWWxpRVVaQVlaQVpDSkpIdFpDZndwZjZVWkJ4Q05rOFpEIiwiYWxnb3JpdGhtIjoiSE1BQy1TSEEyNTYiLCJpc3N1ZWRfYXQiOjE2OTAzODkzNDJ9; fbsr_124024574287414=INp0l4SO-bJiedlPr7N_dOdHndSAu2uxiCFU9yi9vAk.eyJ1c2VyX2lkIjoiMTAwMDUyMzAyMDIwNDEyIiwiY29kZSI6IkFRQnllLVF2Tm03TmdPN21mYUhEZHQ2R1NrSTFtcE5Gd1FsU3Q5Qks2VXZTX21EcjhDd19MQUtYY0lqZ2lNdFZEMzVCV19TSGZwdl9JSDJpOVJXeGFENTk4SUFMd2Fzc3A2RkRnOVJvX1NzZzd2T2diT3pvM0hOYWlLb1dEV3MzaFNnVEFaS2p3QzM4UTJvYjY1MmIzUHlEOUhQektDdElUMVFrQTlMRXR5UGZiT0dneGZPUDNMdWlYeDhPWElYeW9NYzh3TGhaWEs1NlpXY2V0dlJwREVmM3VuUmhNVVAwLVNnMElyOGdsMXM1dGlQbkxQcUdpd1I5SlBiLUQ1ekE1eWZ3ZVVUNjYtMjdrN09hcXNuN0RJRERJX2Q1T1ZVc1k0MlRMU0p5UFhMNm51dkJZQThTbzBRcGVXU1B3QVpJc2drdTlPLVczWHE2d3hmdjJVMkZxekljIiwib2F1dGhfdG9rZW4iOiJFQUFCd3pMaXhuallCTzB3TGxITm0zeTNYMXFGNzhocFpBdUxoSXZyRkpEc3ZpYnI0VDhCbWNXYm1DMXV0bHR5NDI4Q0FaQmxzdmlwSnRrdWNaQnp1dVZaQ2h0QlF5SFRLVEtsNFlET1ZUWkFsN2g4bDdMYVZWRFZ1emY3bWhjUXN1N2dQYmZlT2hmWkNkU1kzcXFSZUtUWkJKTG4xQm1KaWlXUkRKczBqWWxpRVVaQVlaQVpDSkpIdFpDZndwZjZVWkJ4Q05rOFpEIiwiYWxnb3JpdGhtIjoiSE1BQy1TSEEyNTYiLCJpc3N1ZWRfYXQiOjE2OTAzODkzNDJ9; rur="ODN\\05411534656352\\0541721925486:01f7ed6dfaaab58e735012ce695cf9c8cccdf2341df893b010363081b6120b4b5ea7b14e"',
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-fetch-dest': 'document',
+        'sec-fetch-mode': 'navigate',
+        'sec-fetch-site': 'none',
+        'sec-fetch-user': '?1',
+        'upgrade-insecure-requests': '1',
+        'user-agent': self.user_agent,
+        }
+        params = {
+            '__a': '1',
+            '__d': 'a',
+        }
+        response = requests.get(post_url, params=params, cookies=cookies, headers=headers)
+        
+        #ogni media instagram ha un proprio id
+        try:
+            post_data = response.json()
+            media_id = post_data["items"][0]["id"]
+        except Exception as error:
+            print("Error while getting media id")
+            print(error)
+            raise error
+        print(post_data)
+        print(media_id)
+        
+        #richiesta per ottnere la lista degli utenti che hanno messo like al post
+        headers = {
+        'authority': 'www.instagram.com',
+        'accept': '*/*',
+        'accept-language': 'it,it-IT;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        # 'cookie': 'mid=YUdu1gALAAHNXnNE0h7F6pdDKYLo; ig_did=420D6E96-E926-41FA-B7BE-E007431604D1; datr=j0nLYQmmUG1BE9p3zrjavsHd; csrftoken=EhwjDqHVDJtpvez585YVGdkBamVH7u9B; ds_user_id=11534656352; fbm_124024574287414=base_domain=.instagram.com; shbid="8849\\05411534656352\\0541721922024:01f724f2e8244417045585608a38700f882460b447af4da2c531b697aa6a641b4225d419"; shbts="1690386024\\05411534656352\\0541721922024:01f7f875ebc159fa0c13b8c09fd03656f3a723c55b2989dc913e20f8be8c29737c5c2636"; sessionid=11534656352%3AfdtZIMinSQXbcA%3A17%3AAYeOri61WvZNgCKrgKrq6tSPEhVVvwiPeszqAkwPbE8; dpr=1.100000023841858; fbsr_124024574287414=2Sbg9NQ7pe9hlg1odwS_DN4P8--kyh_yIj6INLkLncM.eyJ1c2VyX2lkIjoiMTAwMDUyMzAyMDIwNDEyIiwiY29kZSI6IkFRQ2EyQmxCZFdxV3hQZjlsMVcwdVgxRmZsMnMyd3BiYW92WDVxcUs4UGNYMlZZMnRXT29xN090UjM4TkQ0ZU1odFBzMEhQVG9uRnRYbG1KN1Nfa3R2amY1RWVJN2U2bXNFMVh5NVBsT0ZqYUtOQ2xWZjRLTXR1TllDZ05RMFVwT040eDNJNUVsaFA2Vkt1dHA3bDNqU0d3QlVjUHVNNjRxVzVndkc0Rlo5RVB0TUFzQk5fV0laYmtTR2N0bXdXUEc4akhqVXI1cHlVdUJncEQxMUtESDV3dUR0akpCQ2ZXbjdkdXJtVGVaa1dCM1VxbThmeW9JNkEyTEZOTzUxSmdxck9BX1p2VTJfRlRaUEp1Tk55cldCX0dRVFdCSjRfeWowc2VxMnBuZW12TkNQNFlYXzgtVHM2b3A2Nm91RVU5bFRyeXlfcVduU19LdXdWQjJQVjE1aGJ3Iiwib2F1dGhfdG9rZW4iOiJFQUFCd3pMaXhuallCTzd1Q09ScFVXZVd5aVZtWEl5RXN3eXhqd1ZKZ2VXVGVCdjlXcDNaQ3JaQTlIeU1JWkFFRW9Bdm43ZTk1dGNhdk56Z0YyWkNxalFiUDk5NjJCWTJtRHBaQzZFWGNDdUxrVU15OEFtVkNLaDA0Z3dnWWJ6NFJtZGNISWJCNThZSG9TVjg4SVNaQ0JFYlFwU2lqajBwbE1XOUFUU2s2V01mb1NyMVJkSGVSczE4UDN3YkRuMFBjUVpEIiwiYWxnb3JpdGhtIjoiSE1BQy1TSEEyNTYiLCJpc3N1ZWRfYXQiOjE2OTAzODgzMjF9; rur="ODN\\05411534656352\\0541721924455:01f756d89f28fb17ed7fb5d022354c2e245f8202df4cea5317efe927b2fde3a5aade014c"',
+        'referer': post_url,
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': self.user_agent,
+        'x-asbd-id': '129477',
+        'x-csrftoken': cookies['csrftoken'],
+        'x-ig-app-id': '936619743392459',
+        'x-ig-www-claim': 'hmac.AR0urvaNz7ZHH0rSG_l5k1e2CVYFa4zxrcicMx8JUNX11RQH',
+        'x-requested-with': 'XMLHttpRequest',
+        }
+        likers_url = f'https://www.instagram.com/api/v1/media/{media_id}/likers/'
+        response = requests.get(likers_url, headers=headers, cookies=cookies)
+        
+        try:
+            likers = response.json()['users']
+        except Exception as error:
+            print("Error while getting likers")
+            print(error)
+            raise error
+
+        for liker in likers:
+            self.scraped_likes.append(liker['username'])
+        return True
 
         
         #url iniziale per scaricare i followers

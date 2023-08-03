@@ -75,9 +75,31 @@ class Login():
         for action in login_commands:
             self.execute_action(action)
 
-        self.logged = True
+        #check if login was successful
+        #if the sessionid cookie is found the login was successful
+        #save session cookies in class
+        try:
+            cookies = self.driver.get_cookies()
+            for cookie in cookies:#get session id from cookie
+                if cookie["name"] == "sessionid":
+                    print("login success")
+                    self.logged = True
+                    for cookie in cookies:
+                        self.session_cookies[cookie["name"]] = cookie["value"]
+                    return True
 
-        return True
+        except Exception as e:
+            print(e)
+            self.logged = False
+            return False
+        
+        print("login failed")
+        print("sessionid not found")
+        self.logged = False
+        return False
+        
+
+        
     def logout(self):
         
         logout_commands = [
