@@ -1,5 +1,6 @@
 from seleniumwire import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver import ActionChains
 import time
 
@@ -21,7 +22,7 @@ class Driver:
 
         if self.driver:
             return True
-        profile = webdriver.FirefoxProfile()
+        profile = FirefoxProfile()
     # authorize notificatrion
         profile.set_preference("general.useragent.ovveride",self.user_agent)
         profile.set_preference('permissions.default.desktop-notification', 1)
@@ -29,6 +30,7 @@ class Driver:
         myoptions.headless = headless  # activate headless mode
         myoptions.add_argument("--width=414")
         myoptions.add_argument("--height=896")
+        myoptions.profile = profile
         seleniumwireopt = None
         if proxy != None:
             seleniumwireopt = {}
@@ -52,13 +54,11 @@ class Driver:
         if path["browser"]!= None and path["driver"] !=None:
             driver = webdriver.Firefox(
                 options=myoptions,
-                firefox_profile=profile,
                 firefox_binary=path["browser"],
                 seleniumwire_options=seleniumwireopt) 
         else:
             driver = webdriver.Firefox(
             options=myoptions,
-            firefox_profile=profile,
             seleniumwire_options=seleniumwireopt) 
     
         if proxy:
