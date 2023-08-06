@@ -168,3 +168,8 @@ class Cache:
         with open(filename, "w") as f:
             json.dump(self.session_cookies, f)
         return True
+
+    def load_session_cookies(self,filename):
+        with open(filename, "r") as f:
+            self.session_cookies = json.load(f)
+        return True
