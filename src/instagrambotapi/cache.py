@@ -164,3 +164,7 @@ class Cache:
             if self.cache_file:
                 self.cache_file.close()
 
+    def export_session_cookies(self,filename):
+        with open(filename, "w") as f:
+            json.dump(self.session_cookies, f)
+        return True
