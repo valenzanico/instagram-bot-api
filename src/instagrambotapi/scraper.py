@@ -239,7 +239,10 @@ class Scraper:
         response = requests.get(likers_url, headers=headers, cookies=cookies)
         
         try:
-            likers = response.json()['users']
+            req_json = response.json()
+            print(req_json)
+            likers = req_json['users']
+            print(likers)
         except Exception as error:
             print("Error while getting likers")
             print(error)
