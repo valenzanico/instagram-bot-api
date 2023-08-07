@@ -176,6 +176,7 @@ class Scraper:
         
 
     def scrape_post_likes(self, post_url):
+        scraping_result = []
         cookies = self.session_cookies
         #se non è avvenuto il login ritorna falso
         if not cookies["sessionid"]:
@@ -248,7 +249,8 @@ class Scraper:
             raise error
 
         for liker in likers:
-            self.scraped_likes.append(liker['username'])
+            scraping_result.append(liker['username'])
+        self.scraped_likes = scraping_result
         return True
     
     def scrape_post_meta(self, post_url):
@@ -284,6 +286,7 @@ class Scraper:
             post_data = response.json()
             if post_data:
                 print(post_data)
+                self.scraped_post_metadata = post_data
                 return True
             else:
                 return False
@@ -324,9 +327,10 @@ class Scraper:
         
         #ogni media instagram ha un proprio id
         try:
-            post_data = response.json()
-            if post_data:
-                print(post_data)
+            user_data = response.json()
+            if user_data:
+                print(user_data)
+                self.scraped_user_metadata = user_data
                 return True
             else:
                 return False

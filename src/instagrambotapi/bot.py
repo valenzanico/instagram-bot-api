@@ -18,12 +18,16 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
                 ):
         self.driver = None
         self.logged = False 
-        self.scraped_followers = []
-        self.scraped_likes = []
         self.cache_dir = cache_dir
         self.session_cookies = {}
         self.user_agent = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1"
 
+        #variabili dove vengono salvati i risultati delle funzioni di scraping
+        self.scraped_followers = []
+        self.scraped_likes = []
+        self.scraped_comments = []
+        self.scraped_user_metadata = []
+        self.scraped_post_metadata = []
 
         super().__init__(headless, proxy, path)
         if self.init_driver():
