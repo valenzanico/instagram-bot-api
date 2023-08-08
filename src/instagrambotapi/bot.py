@@ -26,8 +26,8 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
         self.scraped_followers = []
         self.scraped_likes = []
         self.scraped_comments = []
-        self.scraped_user_metadata = []
-        self.scraped_post_metadata = []
+        self.scraped_user_metadata = {}
+        self.scraped_post_metadata = {}
 
         super().__init__(headless, proxy, path)
         if self.init_driver():
