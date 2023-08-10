@@ -173,3 +173,10 @@ class Cache:
         with open(filename, "r") as f:
             self.session_cookies = json.load(f)
         return True
+    
+    def loads_session_cookies(self,cookies):
+        if cookies["sessionid"] and cookies["csrftoken"]:
+            self.session_cookies = cookies
+            return True
+        else:
+            return False

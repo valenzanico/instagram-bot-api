@@ -15,6 +15,7 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
                 proxy=None,
                 path={"browser": None, "driver": None},
                 cache_dir="cache",
+                init_driver=True,
                 ):
         self.driver = None
         self.logged = False 
@@ -30,8 +31,9 @@ class Bot(Driver, Login, Scraper, Senddm, Cache):
         self.scraped_post_metadata = {}
 
         super().__init__(headless, proxy, path)
-        if self.init_driver():
-            print("Driver initialized")
+        if init_driver:
+            if self.init_driver():
+                print("Driver initialized")
         
         self.create_cache_dir()
 
